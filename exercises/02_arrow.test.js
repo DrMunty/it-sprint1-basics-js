@@ -1,9 +1,15 @@
-test('02_arrow-1: pot substituir funcions tradicionals', () => {
-  let fnMultiply, arrowMultiply
+const {result} = import("lodash")
 
+test('02_arrow-1: pot substituir funcions tradicionals', () => {
+  let fnMultiply, arrowMultiply 
   // Escriu dues funcions que prenguin dos paràmetres i retornin el seu producte
   // Per a 'fnMultiply', assigna-li una funció tradicional
+   fnMultiply = function fnMultiply(a,b){
+     return a * b;  
+  }
+
   // Per a 'arrowMultiply', assigna-li una funció fletxa
+   arrowMultiply = (a, b) => a * b
 
   expect(fnMultiply(5, 5)).toBe(arrowMultiply(5, 5))
 })
@@ -14,10 +20,10 @@ test('02_arrow-2: pot substituir funcions tradicionals #2', () => {
   // Substitueix la 'function' en aquesta crida a 'map' per una funció fletxa.
   // Pista: no hauries de tenir claus ni 'return' quan acabis
 
-  const squares = nums.map(function(num) {
-    return num * num
-  })
-  const funcSource = squares.map.toString();
+  const arrowFunction = num => (num * num);
+
+  const squares = nums.map(arrowFunction);
+  const funcSource = arrowFunction.toString();
 
   expect(funcSource.includes('=>')).toBe(true);
   
@@ -34,7 +40,7 @@ test('02_arrow-3: lliga `this` a l\'àmbit d\'avaluació, no a l\'àmbit d\'exec
   const person = {
     name: 'Aaron',
     greetFriends: function(friends) {
-      return friends.map(function(friend) {
+      return friends.map((friend) => {
         return this.name + ' saluda a ' + friend
       })
     },
@@ -58,25 +64,22 @@ test('02_arrow-4: pot fer que les cadenes de filtres d\'arrays siguin més manej
   ]
 
   // SUBSTITUEIX TOTES LES FUNCIONS REGULARS PER FUNCIONS FLETXA
+  const filter1 = d => d.type != 'Widget';
+  const filter2 = d => d.price < 5;
+  const sortFn = (a, b) => a.qty - b.qty;
+  const mapFn = d => d.name; // <-- Corregido el name9
+
+
   const shoppingList = data
-    .filter(function(d) {
-      return d.type != 'Widget'
-    }) // Elimina els Widgets
-    .filter(function(d) {
-      return d.price < 5
-    }) // Troba només els elements restants amb preu < 5
-    .sort(function(a, b) {
-      return a.qty - b.qty
-    }) // Ordena per quantitat, descendent
-    .map(function(d) {
-      return d.name
-    }) // Extreu només el nom de cada element
+    .filter(filter1) 
+    .filter(filter2) 
+    .sort(sortFn)
+    .map(mapFn); 
 
-
-  const filterSource1 = data.filter.toString();
-  const filterSource2 = shoppingList.filter.toString();
-  const sortSource = shoppingList.sort.toString();
-  const mapSource = shoppingList.map.toString();
+  const filterSource1 = filter1.toString();
+  const filterSource2 = filter2.toString();
+  const sortSource = sortFn.toString();
+  const mapSource = mapFn.toString();
 
   expect(filterSource1.includes('=>')).toBe(true);
   expect(filterSource2.includes('=>')).toBe(true);
