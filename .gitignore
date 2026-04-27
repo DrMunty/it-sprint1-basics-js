@@ -1,2 +1,11 @@
-pnpm-lock.yaml
-node-modules
+
+.DS_Store
+
+
+node_modules/
+
+
+*.log
+
+
+*.pdf
