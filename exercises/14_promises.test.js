@@ -24,18 +24,18 @@ test('14_promises-1: should resolve', () => {
     .then(
       result => {
         // throw new Error('això no s'hauria d'executar')
-        // expect(result).toBe(/*INTRODUEIX LA TEVA RESPOSTA AQUÍ*/)
-        throw new Error('assert o llança aquí')
+        expect(result).toBe('ripe apple')
+        // throw new Error('assert o llança aquí')
       },
       error => {
         // throw new Error('això no s'hauria d'executar')
-        // expect(error).toBe(/*INTRODUEIX LA TEVA RESPOSTA AQUÍ*/)
+        expect(error).toBe('unripe apple')
         throw new Error('assert o llança aquí')
       },
     )
     .catch(error => {
       // throw new Error('això no s'hauria d'executar')
-      // expect(error).toBe(/*INTRODUEIX LA TEVA RESPOSTA AQUÍ*/)
+      expect(error).toBe('out of apples')
       throw new Error('assert o llança aquí')
     })
 })
@@ -45,33 +45,33 @@ test('14_promises-2: should reject', () => {
     .then(
       result => {
         // throw new Error('això no s'hauria d'executar')
-        // expect(result).toBe(/*INTRODUEIX LA TEVA RESPOSTA AQUÍ*/)
+        expect(result).toBe('ripe apple')
         throw new Error('assert o llança aquí')
       },
       error => {
         // throw new Error('això no s'hauria d'executar')
-        // expect(error).toBe(/*INTRODUEIX LA TEVA RESPOSTA AQUÍ*/)
+        expect(error).toBe('unripe apple')
         throw new Error('assert o llança aquí')
       },
     )
     .catch(error => {
-      // throw new Error('això no s'hauria d'executar')
-      // expect(error).toBe(/*INTRODUEIX LA TEVA RESPOSTA AQUÍ*/)
-      throw new Error('assert o llança aquí')
+      // throw new Error(`això no s'hauria d'executar`)
+      //expect(error).toBe('unripe apple')
+      //throw new Error('assert o llança aquí')
     })
 })
 
 test('14_promises-3: errors can be caught', () => {
   return pickApple()
     .then(result => {
-      // throw new Error('això no s'hauria d'executar')
+      throw new Error(`això no s'hauria d'executar`)
       // expect(result).toBe(/*INTRODUEIX LA TEVA RESPOSTA AQUÍ*/)
-      throw new Error('assert o llança aquí')
+      //throw new Error('assert o llança aquí')
     })
     .catch(error => {
       // throw new Error('això no s'hauria d'executar')
-      // expect(error).toBe(/*INTRODUEIX LA TEVA RESPOSTA AQUÍ*/)
-      throw new Error('assert o llança aquí')
+      expect(error.message).toBe('out of apples')
+     // throw new Error('assert o llança aquí')
     })
 })
 
