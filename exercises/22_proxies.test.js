@@ -20,8 +20,9 @@ const getCharacter = () => {
 
 test('22_proxies-1: can wrap an existing object', () => {
   const character = getCharacter()
-  const proxy = character
+  const proxy = new Proxy (character, {})
   // Comprova que el proxy no és igual referencialment però sí igual profundament a l'objecte original
+  
   expect(proxy).not.toBe(character) // referencialment diferent
   expect(proxy).toEqual(character) // profundament igual
 })
